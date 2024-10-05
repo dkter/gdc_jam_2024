@@ -17,9 +17,13 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Vector3 nextPosition = transform.position + Time.deltaTime * speed * (target -transform.position).normalized;
+        Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.velocity = speed * (target - transform.position).normalized;
+        // Vector3 nextPosition = transform.position + Time.deltaTime * speed * (target - transform.position).normalized;
+        Vector3 nextPosition = transform.position;
         nextPosition.z = -1 + (0.1f * transform.position.y); // prevent depth/overlap problems using the y-coordinate to determine z-position 
         transform.position = nextPosition;
+
         lifetime -= Time.deltaTime;
         if (lifetime < 0)
         {
