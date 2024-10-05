@@ -1276,6 +1276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 626a3cd2404610a458ce8a90a2bd0cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shape: 2
+  shapeCentre: {x: 0, y: 0, z: 0}
+  gameManager: {fileID: 1227942608}
 --- !u!4 &1174084123
 Transform:
   m_ObjectHideFlags: 0

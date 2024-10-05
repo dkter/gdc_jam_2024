@@ -77,6 +77,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Summon(DrawingIndicator drawingIndicator)
+    {
+        if (drawingIndicator.shape == Shape.Circle)
+        {
+            GameObject newEnemy = Instantiate(enemyPrefab);
+            newEnemy.transform.position = drawingIndicator.shapeCentre;
+        }
+    }
+
     void SpawnEnemy()
     {
         float x = Random.Range(-1f, 1f); 

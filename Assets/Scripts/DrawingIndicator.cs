@@ -3,8 +3,19 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
+public enum Shape
+{
+    Circle,
+    Line,
+    None,
+}
+
 public class DrawingIndicator : MonoBehaviour
 {
+    public Shape shape = Shape.None;
+    public Vector3 shapeCentre = Vector3.zero;
+    public GameObject gameManager;
+
     private Mesh mesh;
     private Vector3 lastMousePosition;
     private List<Vector3> mousePositions;
@@ -108,6 +119,24 @@ public class DrawingIndicator : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             // mouse button just went up, classify shape stored in mousePositions
+            double closedLoopThreshold = 1.0;
+            if (Vector3.Distance(mousePositions[0], mousePositions[mousePositions.Count - 1]) > closedLoopThreshold)
+            {
+                this.shape = Shape.Line;
+            } else
+            {
+                this.shape = Shape.Circle;
+            }
+
+            Vector3 average = Vector3.zero;
+            foreach (Vector3 vec in mousePositions)
+            {
+                average += vec;
+            }
+            average = average / mousePositions.Count;
+            this.shapeCentre = average;
+
+            gameManager.SendMessage("Summon", this);
         }
     }
 
