@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public float initMana = 100;
+    public float wallCost = 15;
+    public float circleCost = 25;
+
     public static GameManager I { get; private set; }
     private float enemySpawnFrequency = 1f; // seconds between enemy spawn
     private float enemySpawnClock = 0f;
@@ -16,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject enemyParent;
 
     public GameObject player;
+    private Player playerScript;
     public GameObject camera;
 
     public GameObject mapParent;
@@ -32,6 +37,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Destroy duplicate instances
         }
+
+        playerScript = player.GetComponent<Player>();
+        playerScript._mana = new Mana();
+        playerScript._mana.SetMax(initMana);
+        playerScript._mana.SetMana(initMana);
     }
 
     private void Start()
@@ -106,22 +116,45 @@ public class GameManager : MonoBehaviour
         
     }
 
+    private void SummonFailSplash()
+    {
+        Debug.Log("Summon Failed!");
+    }
+
     void Summon(DrawingIndicator drawingIndicator)
     {
         if (drawingIndicator.shape == Shape.Circle)
         {
-            GameObject newEnemy = Instantiate(enemyPrefab);
-            newEnemy.transform.position = drawingIndicator.shapeCentre;
-        } else if (drawingIndicator.shape == Shape.Line)
+            var result = playerScript._mana.ConsumeMana(circleCost);
+            if (result == SummonState.Success)
+            {
+                GameObject newEnemy = Instantiate(enemyPrefab);
+                newEnemy.transform.position = drawingIndicator.shapeCentre;
+            }
+            else
+            {
+                SummonFailSplash();
+            }
+
+        }
+        else if (drawingIndicator.shape == Shape.Line)
         {
-            GameObject newWall = Instantiate(wallPrefab);
-            newWall.transform.position = new Vector3(
-                drawingIndicator.shapeCentre.x,
-                drawingIndicator.shapeCentre.y,
-                -1f
-            );
-            Quaternion rotation = Quaternion.FromToRotation(new Vector3(1f, 0, 0), drawingIndicator.shapeVector);
-            newWall.transform.rotation = rotation;
+            var result = playerScript._mana.ConsumeMana(wallCost);
+            if (result == SummonState.Success)
+            {
+                GameObject newWall = Instantiate(wallPrefab);
+                newWall.transform.position = new Vector3(
+                    drawingIndicator.shapeCentre.x,
+                    drawingIndicator.shapeCentre.y,
+                    -1f
+                );
+                Quaternion rotation = Quaternion.FromToRotation(new Vector3(1f, 0, 0), drawingIndicator.shapeVector);
+                newWall.transform.rotation = rotation;
+            }
+            else
+            {
+                SummonFailSplash();
+            }
         }
     }
 

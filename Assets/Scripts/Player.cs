@@ -1,14 +1,57 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum SummonState
+{
+    Success,
+    Failed
+}
+
+public class Mana
+{
+    float mana;
+    float max;
+    public SummonState ConsumeMana(float amount)
+    {
+        Debug.Log("consuming mana " + mana + " minus " + amount);
+
+        if (amount > mana)
+            return SummonState.Failed;
+
+        else
+        {
+            mana -= amount;
+            return SummonState.Success;
+        }
+    }
+    public void SetMax(float amount)
+    {
+        max = amount;
+    }
+    public void SetMana(float amount)
+    {
+        mana = amount;
+    }
+}
 
 public class Player : MonoBehaviour
 {
     private Vector3 direction;
     public float moveSpeed = 1f;
+    public Mana _mana;
+
 
     // Update is called once per frame
     void Update()
+    {
+        DoMovement();
+
+        
+    }
+
+    void DoMovement()
     {
         direction = new Vector3(0, 0, 0);
         if (Input.GetKey(KeyCode.A))
