@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject enemyPrefab;
     private List<Enemy> enemies = new List<Enemy>();
     private int enemyUpdateIndex = 0;
+    public GameObject enemyParent;
 
     public GameObject player;
 
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
         }
 
         enemySpawnClock += Time.deltaTime;
-        if (enemySpawnClock > enemySpawnFrequency)
+        if (enemySpawnClock > enemySpawnFrequency)  
         {
             enemySpawnClock = 0;
             SpawnEnemy();
@@ -97,6 +98,8 @@ public class GameManager : MonoBehaviour
     {
         Enemy newEnemy;
         newEnemy = Instantiate(enemyPrefab).GetComponent<Enemy>();
+        newEnemy.gameObject.transform.parent = enemyParent.transform;
+
         if (pos == null)
         {
             // randomize position
