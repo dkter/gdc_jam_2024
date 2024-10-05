@@ -87,7 +87,9 @@ public class GameManager : MonoBehaviour
         }
 
         //update enemy trajectories one enemy per frame
-        enemies[enemyUpdateIndex].UpdateTarget();
+        if (enemies.Count > 0)
+            enemies[enemyUpdateIndex].UpdateTarget();
+
         enemyUpdateIndex++;
         if (enemyUpdateIndex > enemies.Count-1)
         {
