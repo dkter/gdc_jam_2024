@@ -14,6 +14,7 @@ public class DrawingIndicator : MonoBehaviour
 {
     public Shape shape = Shape.None;
     public Vector3 shapeCentre = Vector3.zero;
+    public Vector3 shapeVector = Vector3.zero;
     public GameObject gameManager;
 
     private Mesh mesh;
@@ -123,9 +124,11 @@ public class DrawingIndicator : MonoBehaviour
             if (Vector3.Distance(mousePositions[0], mousePositions[mousePositions.Count - 1]) > closedLoopThreshold)
             {
                 this.shape = Shape.Line;
+                this.shapeVector = mousePositions[mousePositions.Count - 1] - mousePositions[0];
             } else
             {
                 this.shape = Shape.Circle;
+                this.shapeVector = Vector3.zero;
             }
 
             Vector3 average = Vector3.zero;
@@ -137,6 +140,10 @@ public class DrawingIndicator : MonoBehaviour
             this.shapeCentre = average;
 
             gameManager.SendMessage("Summon", this);
+
+            // make shape disappear
+            mesh = new Mesh();
+            GetComponent<MeshFilter>().mesh = mesh;
         }
     }
 

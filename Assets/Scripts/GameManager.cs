@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     private float enemySpawnFrequency = 1f; // seconds between enemy spawn
     private float enemySpawnClock = 0f;
     public GameObject enemyPrefab;
+    public GameObject wallPrefab;
 
     private void Awake()
     {
@@ -83,6 +84,12 @@ public class GameManager : MonoBehaviour
         {
             GameObject newEnemy = Instantiate(enemyPrefab);
             newEnemy.transform.position = drawingIndicator.shapeCentre;
+        } else if (drawingIndicator.shape == Shape.Line)
+        {
+            GameObject newWall = Instantiate(wallPrefab);
+            newWall.transform.position = drawingIndicator.shapeCentre;
+            Quaternion rotation = Quaternion.FromToRotation(new Vector3(1f, 0, 0), drawingIndicator.shapeVector);
+            newWall.transform.rotation = rotation;
         }
     }
 
