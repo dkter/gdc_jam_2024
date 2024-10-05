@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     public Vector3 target;
 
-    private float speed = 1f;
+    private float speed = 4f;
     private float lifetime = 15f;
     public void UpdateTarget()
     {
@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
         rigidbody.velocity = speed * (target - transform.position).normalized;
         // Vector3 nextPosition = transform.position + Time.deltaTime * speed * (target - transform.position).normalized;
         Vector3 nextPosition = transform.position;
-        nextPosition.z = -1 + (0.1f * transform.position.y); // prevent depth/overlap problems using the y-coordinate to determine z-position 
+        nextPosition.z = -1 + (0.01f * transform.position.y); // prevent depth/overlap problems using the y-coordinate to determine z-position 
         transform.position = nextPosition;
 
         lifetime -= Time.deltaTime;

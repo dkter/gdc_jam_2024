@@ -20,6 +20,11 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
             direction.y -= 1;
 
+        if (transform.position.x < -30) direction.x = Mathf.Clamp(direction.x, 0, 1);
+        if (transform.position.x > 30) direction.x = Mathf.Clamp(direction.x, -1, 0);
+        if (transform.position.y < -30) direction.y = Mathf.Clamp(direction.y, 0, 1);
+        if (transform.position.y > 30) direction.y = Mathf.Clamp(direction.y, -1, 0);
+
         transform.position += Time.deltaTime * moveSpeed * direction.normalized;
     }
 }
