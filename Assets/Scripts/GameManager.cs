@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,7 +8,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private float enemySpawnFrequency = 1f; // seconds between enemy spawn
     private float enemySpawnClock = 0f;
+    
     public GameObject enemyPrefab;
+    private List<Enemy> enemies = new List<Enemy>();
+    private int enemyUpdateIndex = 0;
+
+    public GameObject player;
+
 
     private void Awake()
     {
@@ -75,16 +83,39 @@ public class GameManager : MonoBehaviour
             enemySpawnClock = 0;
             SpawnEnemy();
         }
+
+        //update enemy trajectories one enemy per frame
+        enemies[enemyUpdateIndex].UpdateTarget();
+        enemyUpdateIndex++;
+        if (enemyUpdateIndex > enemies.Count-1)
+        {
+            enemyUpdateIndex = 0;
+        }
     }
 
-    void SpawnEnemy()
+    void SpawnEnemy(Vector3? pos = null)
     {
-        float x = Random.Range(-1f, 1f); 
-        float y = Random.Range(-1f, 1f);
-        Vector3 direction = new Vector3(x, y, 0).normalized;
+        Enemy newEnemy;
+        newEnemy = Instantiate(enemyPrefab).GetComponent<Enemy>();
+        if (pos == null)
+        {
+            // randomize position
+            float x = Random.Range(-1f, 1f);
+            float y = Random.Range(-1f, 1f);
+            Vector3 direction = new Vector3(x, y, 0).normalized;
 
-        GameObject newEnemy = Instantiate(enemyPrefab);
-        newEnemy.transform.position = 10f * direction;
+            newEnemy.gameObject.transform.position = 10f * direction;
+
+        }
+        else
+        {
+            // or place the enemy where you want
+            newEnemy.gameObject.transform.position = (Vector3)pos;
+        }
+
+        // store the enemy 
+        enemies.Add(newEnemy);
+        print(newEnemy);
     }
 
 
