@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static GameManager I { get; private set; }
     private float enemySpawnFrequency = 1f; // seconds between enemy spawn
     private float enemySpawnClock = 0f;
     
@@ -16,14 +16,16 @@ public class GameManager : MonoBehaviour
     public GameObject enemyParent;
 
     public GameObject player;
+    public GameObject camera;
 
+    public GameObject mapParent;
 
     private void Awake()
     {
         // Ensure that there is only one GameManager instance
-        if (Instance == null)
+        if (I == null)
         {
-            Instance = this;
+            I = this;
             DontDestroyOnLoad(gameObject); // Keep this GameManager between scenes
         }
         else
@@ -95,6 +97,13 @@ public class GameManager : MonoBehaviour
         {
             enemyUpdateIndex = 0;
         }
+
+
+    }
+
+    private void UpdateMap()
+    {
+        
     }
 
     void Summon(DrawingIndicator drawingIndicator)

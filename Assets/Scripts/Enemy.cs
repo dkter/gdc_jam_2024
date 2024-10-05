@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     private float lifetime = 15f;
     public void UpdateTarget()
     {
-        Vector3 playerPos = GameManager.Instance.player.transform.position;
+        Vector3 playerPos = GameManager.I.player.transform.position;
         target = new Vector3(playerPos.x, playerPos.y, -1);
     }
 
