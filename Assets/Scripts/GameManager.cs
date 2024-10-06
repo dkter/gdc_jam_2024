@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public float wallCost = 15;
     public float circleCost = 25;
 
+    public int score = 0;
     public static GameManager I { get; private set; }
     private float enemySpawnFrequency = 1f; // seconds between enemy spawn
     private float enemySpawnClock = 0f;
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     private Player playerScript;
     public GameObject camera;
+    public GameObject scoreIndicator;
 
     public GameObject mapParent;
     public Slider manaSlider;
@@ -128,7 +130,7 @@ public class GameManager : MonoBehaviour
             enemyUpdateIndex = 0;
         }
 
-
+        scoreIndicator.GetComponent<TextMeshProUGUI>().text = score.ToString();
     }
 
     private void UpdateMap()

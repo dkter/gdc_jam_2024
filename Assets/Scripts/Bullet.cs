@@ -28,6 +28,7 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Enemy>() != null)
         {
+            GameManager.I.score += 1;
             Destroy(collision.gameObject);
         }
         Destroy(gameObject);

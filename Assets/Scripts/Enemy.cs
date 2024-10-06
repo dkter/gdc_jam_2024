@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
         float distance = Vector3.Distance(this.transform.position, bombPosition);
         if (distance < distanceThreshold)
         {
+            GameManager.I.score += 1;
             Destroy(gameObject);
         }
     }
