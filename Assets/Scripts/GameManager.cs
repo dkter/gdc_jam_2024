@@ -133,6 +133,12 @@ public class GameManager : MonoBehaviour
         scoreIndicator.GetComponent<TextMeshProUGUI>().text = score.ToString();
     }
 
+    public void GameOver()
+    {
+        Splash("Game Over!", new Color(1f, 0f, 0f));
+        SceneManager.LoadScene(0);
+    }
+
     private void UpdateMap()
     {
         

@@ -30,7 +30,7 @@ public class Mana
     public void SetMax(float amount)
     {
         max = amount;
-        GameManager.I.manaSlider.SetValueWithoutNotify(mana / max);
+        GameManager.I.manaSlider.SetValueWithoutNotify(mana / max); 
     }
     public void SetMana(float amount)
     {
@@ -73,5 +73,14 @@ public class Player : MonoBehaviour
         if (transform.position.y > 30) direction.y = Mathf.Clamp(direction.y, -1, 0);
 
         transform.position += Time.deltaTime * moveSpeed * direction.normalized;
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<Enemy>() != null)
+        {
+            GameManager.I.GameOver();
+        }
     }
 }
