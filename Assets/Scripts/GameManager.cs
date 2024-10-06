@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject wallPrefab;
     public GameObject bombPrefab;
+    public GameObject turretPrefab;
     private List<Enemy> enemies = new List<Enemy>();
     private int enemyUpdateIndex = 0;
     public GameObject enemyParent;
@@ -154,6 +155,17 @@ public class GameManager : MonoBehaviour
                 );
                 Quaternion rotation = Quaternion.FromToRotation(new Vector3(1f, 0, 0), drawingIndicator.shapeVector);
                 newWall.transform.rotation = rotation;
+            }
+            else
+            {
+                SummonFailSplash();
+            }
+        } else if (drawingIndicator.shape == Shape.Rectangle) {
+            var result = playerScript._mana.ConsumeMana(circleCost);
+            if (result == SummonState.Success)
+            {
+                GameObject newTurret = Instantiate(turretPrefab);
+                newTurret.transform.position = drawingIndicator.shapeCentre;
             }
             else
             {

@@ -827,6 +827,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 6469250294651950489, guid: dbda246c07b5afc4c9fd7a8c5f26a98d, type: 3}
   wallPrefab: {fileID: 4953265824450949569, guid: d15e96ca17d8fc149af3320823cf58b1, type: 3}
   bombPrefab: {fileID: 6190312132929773455, guid: 82fb45c17fd4b9348b9788327275a5cb, type: 3}
+  turretPrefab: {fileID: 6928445072708893927, guid: 2c3a688dc330ce040a4efe2992dd7b50, type: 3}
   enemyParent: {fileID: 583609803}
   player: {fileID: 1605622254}
   camera: {fileID: 519420028}
