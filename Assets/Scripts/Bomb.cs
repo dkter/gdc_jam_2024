@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     public GameObject enemyParent;
+    public GameObject explosionPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,12 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         enemyParent.BroadcastMessage("Bomb", this.transform.position);
+        GameObject newExplosion = Instantiate(explosionPrefab);
+        newExplosion.transform.position = new Vector3(
+            transform.position.x,
+            transform.position.y,
+            -20
+        );
         Destroy(gameObject);
     }
 
