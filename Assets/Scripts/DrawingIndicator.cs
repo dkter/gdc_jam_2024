@@ -235,7 +235,7 @@ public class DrawingIndicator : MonoBehaviour
         // Debug.Log("area ratio: " + area_ratio);
         // Debug.Log($"convex hull:\n{string.Join("\n", convexHull)}");
 
-        if (p2a_ratio < 4*Mathf.PI + 1)
+        if (p2a_ratio < 4*Mathf.PI + 2)
         {
             return Shape.Circle;
         }

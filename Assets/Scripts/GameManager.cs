@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     
     public GameObject enemyPrefab;
     public GameObject wallPrefab;
+    public GameObject bombPrefab;
     private List<Enemy> enemies = new List<Enemy>();
     private int enemyUpdateIndex = 0;
     public GameObject enemyParent;
@@ -123,13 +125,14 @@ public class GameManager : MonoBehaviour
 
     void Summon(DrawingIndicator drawingIndicator)
     {
+        Debug.Log("shape: " + drawingIndicator.shape.ToString());
         if (drawingIndicator.shape == Shape.Circle)
         {
             var result = playerScript._mana.ConsumeMana(circleCost);
             if (result == SummonState.Success)
             {
-                GameObject newEnemy = Instantiate(enemyPrefab);
-                newEnemy.transform.position = drawingIndicator.shapeCentre;
+                GameObject newBomb = Instantiate(bombPrefab);
+                newBomb.transform.position = drawingIndicator.shapeCentre;
             }
             else
             {
