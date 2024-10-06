@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
             {
                 GameObject newBomb = Instantiate(bombPrefab);
                 newBomb.transform.position = drawingIndicator.shapeCentre;
+                newBomb.GetComponent<Bomb>().enemyParent = enemyParent;
             }
             else
             {

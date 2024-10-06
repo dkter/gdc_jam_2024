@@ -30,4 +30,14 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void Bomb(Vector3 bombPosition)
+    {
+        float distanceThreshold = 3;
+        float distance = Vector3.Distance(this.transform.position, bombPosition);
+        if (distance < distanceThreshold)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
