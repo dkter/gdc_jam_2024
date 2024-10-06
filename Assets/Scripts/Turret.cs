@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Turret : MonoBehaviour
 {
     public GameObject enemyParent;
     public GameObject bulletPrefab;
+    public Slider healthbar;
+    public float health = 15f;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +47,17 @@ public class Turret : MonoBehaviour
             );
             var targetRotation = Quaternion.FromToRotation(transform.position, lookTo);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 5f);
+        }
+
+        if (health > 0)
+        {
+            health -= Time.deltaTime;
+            healthbar.SetValueWithoutNotify(health / 15f);
+            healthbar.gameObject.transform.position = gameObject.transform.position;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 }
