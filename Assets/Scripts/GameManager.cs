@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour
             {
                 GameObject newTurret = Instantiate(turretPrefab);
                 newTurret.transform.position = drawingIndicator.shapeCentre;
+                newTurret.GetComponent<Turret>().enemyParent = enemyParent;
             }
             else
             {
