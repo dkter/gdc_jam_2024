@@ -23,17 +23,21 @@ public class Mana
         else
         {
             mana -= amount;
+            GameManager.I.manaSlider.SetValueWithoutNotify(mana / max);
             return SummonState.Success;
         }
     }
     public void SetMax(float amount)
     {
         max = amount;
+        GameManager.I.manaSlider.SetValueWithoutNotify(mana / max);
     }
     public void SetMana(float amount)
     {
         mana = amount;
+        GameManager.I.manaSlider.SetValueWithoutNotify(mana / max);
     }
+
 }
 
 public class Player : MonoBehaviour

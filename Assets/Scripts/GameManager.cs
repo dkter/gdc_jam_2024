@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     public GameObject camera;
 
     public GameObject mapParent;
+    public Slider manaSlider;
 
     private void Awake()
     {
@@ -45,6 +47,7 @@ public class GameManager : MonoBehaviour
         playerScript._mana = new Mana();
         playerScript._mana.SetMax(initMana);
         playerScript._mana.SetMana(initMana);
+        manaSlider.SetValueWithoutNotify(1);
     }
 
     private void Start()
@@ -202,5 +205,8 @@ public class GameManager : MonoBehaviour
         print(newEnemy);
     }
 
-
+    public void ManaPickup()
+    {
+        playerScript._mana.SetMana(initMana);
+    }
 }
