@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     public Vector3 target;
 
-    private float speed = 4f;
+    private float speed = 3f;
     private float lifetime = 15f;
     public void UpdateTarget()
     {

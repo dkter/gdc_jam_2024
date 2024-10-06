@@ -45,18 +45,20 @@ public class Player : MonoBehaviour
     private Vector3 direction;
     public float moveSpeed = 1f;
     public Mana _mana;
-
+    public bool alive = true;
 
     // Update is called once per frame
     void Update()
     {
-        DoMovement();
-
-        
+        if (alive)
+        {
+            DoMovement();
+        }
     }
 
     void DoMovement()
     {
+
         direction = new Vector3(0, 0, 0);
         if (Input.GetKey(KeyCode.A))
             direction.x -= 1;
@@ -78,6 +80,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         if (collision.gameObject.GetComponent<Enemy>() != null)
         {
             GameManager.I.GameOver();

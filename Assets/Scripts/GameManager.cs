@@ -131,17 +131,47 @@ public class GameManager : MonoBehaviour
         }
 
         scoreIndicator.GetComponent<TextMeshProUGUI>().text = score.ToString();
+        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetGame();
+        }
     }
 
     public void GameOver()
     {
         Splash("Game Over!", new Color(1f, 0f, 0f));
-        SceneManager.LoadScene(0);
+        Time.timeScale = 0.05f;
+        playerScript.alive = false;
     }
 
-    private void UpdateMap()
+    void ResetGame()
     {
+        foreach (var t in GameObject.FindObjectsOfType<Enemy>())
+        {
+            Destroy(t.gameObject);
+        }
+
+        foreach (var t in GameObject.FindObjectsOfType<Turret>())
+        {
+            Destroy(t.gameObject);
+        }
+
+        foreach (var t in GameObject.FindObjectsOfType<Bullet>())
+        {
+            Destroy(t.gameObject);
+        }
         
+        foreach (var t in GameObject.FindObjectsOfType<Wall>())
+        {
+            Destroy(t.gameObject);
+        }
+        
+        score = 0;
+        player.transform.position = new Vector3(0, 0, -1);
+        playerScript.alive = true;
+        Time.timeScale = 1;
+        playerScript._mana.SetMana(initMana);
     }
 
     private void SummonFailSplash()
