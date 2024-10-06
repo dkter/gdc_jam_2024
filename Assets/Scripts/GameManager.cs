@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +29,10 @@ public class GameManager : MonoBehaviour
     public GameObject camera;
 
     public GameObject mapParent;
+    public Slider manaSlider;
+
+    public GameObject splashParent;
+    public GameObject splashTextPrefab;
 
     private void Awake()
     {
@@ -45,10 +51,19 @@ public class GameManager : MonoBehaviour
         playerScript._mana = new Mana();
         playerScript._mana.SetMax(initMana);
         playerScript._mana.SetMana(initMana);
+        manaSlider.SetValueWithoutNotify(1);
+    }
+
+    public void Splash(string text, Color c)
+    {
+        GameObject _splash = Instantiate(splashTextPrefab);
+        _splash.transform.parent = splashParent.transform;
+        _splash.GetComponent<SplashText>().SetData(text, c);
     }
 
     private void Start()
     {
+        Splash("Game Start!", new Color(0.1f, 1f, 0.4f));
         StartGame();
     }
 
@@ -59,12 +74,14 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
+        Splash("Game Pause!", new Color(1f, 0.7f, 0f));
         Debug.Log("Game Paused");
         Time.timeScale = 0; 
     }
 
     public void ResumeGame()
     {
+        Splash("Game Resume!", new Color(0.1f, 1f, 0.4f));
         Debug.Log("Game Resumed");
         Time.timeScale = 1; 
     }
@@ -121,6 +138,7 @@ public class GameManager : MonoBehaviour
 
     private void SummonFailSplash()
     {
+        Splash("Summon Failed!", new Color(1f, 0f, 0f));
         Debug.Log("Summon Failed!");
     }
 
@@ -132,6 +150,8 @@ public class GameManager : MonoBehaviour
             var result = playerScript._mana.ConsumeMana(circleCost);
             if (result == SummonState.Success)
             {
+
+                Splash("I have a Bomb!", new Color(1f, 0f, 1f));
                 GameObject newBomb = Instantiate(bombPrefab);
                 newBomb.transform.position = drawingIndicator.shapeCentre;
                 newBomb.GetComponent<Bomb>().enemyParent = enemyParent;
@@ -147,6 +167,7 @@ public class GameManager : MonoBehaviour
             var result = playerScript._mana.ConsumeMana(wallCost);
             if (result == SummonState.Success)
             {
+                Splash("Wall Summoned!", new Color(1f, 0f, 1f));
                 GameObject newWall = Instantiate(wallPrefab);
                 newWall.transform.position = new Vector3(
                     drawingIndicator.shapeCentre.x,
@@ -164,6 +185,7 @@ public class GameManager : MonoBehaviour
             var result = playerScript._mana.ConsumeMana(circleCost);
             if (result == SummonState.Success)
             {
+                Splash("Turret Summoned!", new Color(1f, 0f, 1f));
                 GameObject newTurret = Instantiate(turretPrefab);
                 newTurret.transform.position = drawingIndicator.shapeCentre;
                 newTurret.GetComponent<Turret>().enemyParent = enemyParent;
@@ -202,5 +224,9 @@ public class GameManager : MonoBehaviour
         print(newEnemy);
     }
 
-
+    public void ManaPickup()
+    {
+        Splash("Mana Get!", new Color(0f, 1f, 1f));
+        playerScript._mana.SetMana(initMana);
+    }
 }
