@@ -167,8 +167,8 @@ public class GameManager : MonoBehaviour
         if (pos == null)
         {
             // randomize position
-            float x = Random.Range(-1f, 1f);
-            float y = Random.Range(-1f, 1f);
+            float x = UnityEngine.Random.Range(-1f, 1f);
+            float y = UnityEngine.Random.Range(-1f, 1f);
             Vector3 direction = new Vector3(x, y, 0).normalized;
 
             newEnemy.gameObject.transform.position = player.transform.position + 10f * direction;
